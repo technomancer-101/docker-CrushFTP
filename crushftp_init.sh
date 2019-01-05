@@ -1,7 +1,7 @@
 #!/bin/bash
 #!/bin/sh
 #
-# Control script for CrushFTP v1.5
+# Control script for CrushFTP v1.6
 #
 # chkconfig: - 86 14
 # description: CrushFTP
@@ -18,55 +18,22 @@
 # Description:       Starts Crush on boot  
 ### END INIT INFO  
 # THESE NEED TO BE SET
-CRUSH_DIR="/var/opt/CrushFTP8_PC/" #crushftp directory
+CRUSH_DIR="/var/opt/CrushFTP9_PC/" #crushftp directory
 CRUSH_INIT_SCRIPT="$CRUSH_DIR"crushftp_init.sh
 USER="root" # only work for this user
 JAVA="java"
+###
 PS="ps"
 AWK="awk"
 GREP="grep"
 WHOAMI="whoami"
 NOHUP="nohup"
-INSTSCRIPT=0
-DEBUG=0
+###
+INSTSCRIPT=0 # set this to -1 to force off automatic sytem version detect
+###
 LC_ALL=en_US.UTF-8
 export LC_ALL=en_US.utf8
 
-# Check if it's the first run and if so create appropriate symlinks
-if [ !f /var/opt/CrushFTP8_PC/symlinkscreated ]; then
-  mkdir "/config"
-  mkdir "/config/backup"
-  mkdir "/config/jobs"
-  mkdir "/config/logs"
-  mkdir "/config/plugins"
-  mkdir "/config/statsDB"
-  mkdir "/config/syncsDB"
-  mkdir "/config/users"
-  mkdir "/config/extras"
-  cp "/var/opt/CrushFTP8_PC/backup/**" "/config/backup/"
-  rmdir "/var/opt/CrushFTP8_PC/backup"
-  cp "/var/opt/CrushFTP8_PC/jobs/**" "/config/jobs/"
-  rmdir "/var/opt/CrushFTP8_PC/jobs"
-  cp "/var/opt/CrushFTP8_PC/logs/**" "/config/logs/"
-  rmdir "/var/opt/CrushFTP8_PC/logs"
-  cp "/var/opt/CrushFTP8_PC/plugins/**" "/config/plugins/"
-  rmdir "/var/opt/CrushFTP8_PC/plugins"
-  cp "/var/opt/CrushFTP8_PC/statsDB/**" "/config/statsDB/"
-  rmdir "/var/opt/CrushFTP8_PC/statsDB"
-  cp "/var/opt/CrushFTP8_PC/syncsDB/**" "/config/syncsDB/"
-  rmdir "/var/opt/CrushFTP8_PC/syncsDB"
-  cp "/var/opt/CrushFTP8_PC/users/**" "/config/users/"
-  rmdir "/var/opt/CrushFTP8_PC/users"
-  ln -s "/var/opt/CrushFTP8_PC/backup" "/config/backup"
-  ln -s "/var/opt/CrushFTP8_PC/jobs" "/config/jobs"
-  ln -s "/var/opt/CrushFTP8_PC/logs" "/config/logs"
-  ln -s "/var/opt/CrushFTP8_PC/plugins" "/config/plugins"
-  ln -s "/var/opt/CrushFTP8_PC/statsDB" "/config/statsDB"
-  ln -s "/var/opt/CrushFTP8_PC/syncsDB" "/config/syncsDB"
-  ln -s "/var/opt/CrushFTP8_PC/users" "/config/users"
-  ln -s "/var/opt/CrushFTP8_PC/extras" "/config/extras"
-  touch /var/opt/CrushFTP8_PC/symlinkscreated
-fi
 # example of how to redirect a low port to a high port so Crush doesn't have to run as root
 # iptables -t nat -A PREROUTING -p tcp -m tcp --dport 21 -j REDIRECT --to-ports 2121
 
@@ -106,7 +73,7 @@ chk_user()
 {
   if [ "$USER" != `whoami` ]; then
     if [ `whoami` = "root" -a "$ROOT_OK" = "1" ]; then
-  echo ""
+	echo ""
       # echo "Not an error. Root user is OK here, even if 'not' the proper user (such as killing the process)."
     else
        echo "Wrong user. This script MUST be run as <$USER>, but you are <`whoami`>"
@@ -125,7 +92,10 @@ if [ ! "${JAVAVER:0:1}" ] ; then
   echo "No Java runtime found. Please install Java then try again. Exiting ..."
   exit 1
 fi
-
+if [ "$INSTSCRIPT" == "-1" ];then
+    echo "Manual service installation method is set"
+    INSTSCRIPT=0
+else
 OS=`uname -s`
 REV=`uname -r`
 
@@ -134,54 +104,55 @@ if [ "${OS}" = "Linux" ] ; then
     if [ -f /etc/redhat-release ] ; then
         DIST='RedHat'
         REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
-    if [ ${REV:0:1} -eq "7" ] ; then
-      INSTSCRIPT=1
-    else
-      INSTSCRIPT=2
-    fi
-      
+		if [ ${REV:0:1} -eq "7" ] ; then
+			INSTSCRIPT=1
+		else
+			INSTSCRIPT=2
+		fi
+			
     elif [ -f /etc/SuSE-release ] ; then
         DIST=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
         REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
-    INSTSCRIPT=2
-    
+		INSTSCRIPT=2
+		
     elif [ -f /etc/mandrake-release ] ; then
         DIST='Mandrake'
         REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
-    INSTSCRIPT=2
-    
+		INSTSCRIPT=2
+		
     elif [ -f /etc/debian_version ] ; then
         DIST="`lsb_release -i -s`"""
-  REV="`lsb_release -r -s`"""
+	    REV="`lsb_release -r -s`"""
         if [ "${DIST}" == "Ubuntu" ]; then
-    if [ ${REV:0:2} -gt "11" ] ; then
-      if [ ${REV:0:2} -eq "16" ] ; then
-        INSTSCRIPT=1
-        else
-        INSTSCRIPT=4
-      fi
-      else
-        INSTSCRIPT=3
-      fi
-  else 
-    if [ ${REV:0:2} -lt "8" ] ; then
-      INSTSCRIPT=3
-    else
-      INSTSCRIPT=4
-    fi
-    
-  fi
-    
-    
+		if [ ${REV:0:2} -gt "11" ] ; then
+		  if [ ${REV:0:2} -eq "16" ] ; then
+				INSTSCRIPT=1
+		    else
+				INSTSCRIPT=4
+		  fi
+			else
+				INSTSCRIPT=3
+			fi
+	elif  [ "${DIST}" == "Debian" ]; then
+		if [ ${REV:0:1} -lt "8" ] ; then
+			INSTSCRIPT=3
+		else
+			INSTSCRIPT=4
+		fi
+		
+	fi
+		
+		
     else 
-    DIST="Misc Linux"   
-  fi
-  
+		DIST="Misc Linux"		
+	fi
+	
 else 
     OS="Unknown"
-  DIST="Unknown"
-  REV="Unknown"
-  KERNEL="Unknown"
+	DIST="Unknown"
+	REV="Unknown"
+	KERNEL="Unknown"
+fi
 fi
 
 OSVER="OS-${OS} DIST-${DIST} REV-${REV} KERNEL-${KERNEL} INST-${INSTSCRIPT} JAVA-${JAVAVER}"
@@ -199,8 +170,9 @@ CrushFTP_start() {
              change_dir
 
              # run daemon
-             #$NOHUP $JAVA -Ddir=$CRUSH_DIR -Xmx512M -jar CrushFTP.jar -dmz 9000 >/dev/null 2>&1
-             $NOHUP $JAVA -Ddir=$CRUSH_DIR -Xmx1024M -jar plugins/lib/CrushFTPJarProxy.jar -d >/dev/null 2>&1
+             #$NOHUP $JAVA -Ddir=$CRUSH_DIR -Xmx512M -jar CrushFTP.jar -dmz 9000 & >/dev/null 2>&1
+             $NOHUP $JAVA -Ddir=$CRUSH_DIR -Xmx1024M -jar plugins/lib/CrushFTPJarProxy.jar -d & >/dev/null 2>&1
+             echo OK
 }
 
 CrushFTP_stop() {
@@ -237,7 +209,7 @@ CrushFTP_stop_silent() {
                kill $CRUSH_PID
                ret_val=$?
                if [ ${ret_val} -ne 0 ]; then
-              echo FAIL
+           	  echo FAIL
                   echo could not kill PID
                   exit 1
                fi 
@@ -250,17 +222,17 @@ CrushFTP_stop_silent() {
 #############################################################################################
 case "$1" in
         start)
-                CrushFTP_stop_silent
-    CrushFTP_start
+            CrushFTP_stop_silent
+            CrushFTP_start
         ;;
 
         stop)
-    CrushFTP_stop
+            CrushFTP_stop
         ;;
 
         restart)
                 CrushFTP_stop
-    sleep 5
+		sleep 5
                 CrushFTP_start 
         ;;
 
@@ -278,109 +250,110 @@ case "$1" in
                fi
              fi
         ;;
-  install)
+	install)
 
              chk_user
              get_pid
              if [ "$CRUSH_PID" ]; then
-               echo "CrushFTP already running (pid $CRUSH_PID), we cannot proceed, exiting... "
-               #kill $CRUSH_PID
+               echo "CrushFTP already running (pid $CRUSH_PID), killing process "
+               kill -9 $CRUSH_PID
+               get_pid
+               if [ "$CRUSH_PID" ]; then
+               echo "Process could not be terminated, exiting ..."
                exit 1
+               fi
              fi
-    GetOsVer
-    echo $OSVER
-    if [ "$INSTSCRIPT" = "0" ];then
+		GetOsVer
+		echo $OSVER
+		if [ "$INSTSCRIPT" = "0" ];then
                         echo "Automatic OS version detection failed. Please try to install service manually"
                         echo ""
                         echo "Select your OS family:"
-                        echo "1 - RHEL/CentOS 7 or Ubuntu 16  based (systemD method)"
+                        echo "1 - RHEL/CentOS 7 or Ubuntu 16  and newer based (systemD method)"
                         echo "2 - RHEL/CentOS 6 and prior  based (system V method)"
-                        echo "3 - All Debian / All Ubuntu except 16 and 13 "
+                        echo "3 - Prior to Debian 8 / All Ubuntu except 16 and 13 "
                         echo "0 - Not sure - EXIT -"
                         echo ""
-      read -p '>>> ' INSTSCRIPT
+			read -p '>>> ' INSTSCRIPT
 
-    fi
-    
-    #CentOS 7 , Ubuntu 16
-    if [ "$INSTSCRIPT" = "1" ]; 
-      then
-        touch /etc/systemd/system/crushftp.service
-        cat <<-EOT >/etc/systemd/system/crushftp.service
-        [Unit]
-          Description=CrushFTP 8 Server
-          Documentation=http://www.crushftp.com/
-          After=network.target auditd.service named.service
-        [Service]
-          Type=forking
-          ExecStart=${CRUSH_INIT_SCRIPT} start
-          ExecStop=${CRUSH_INIT_SCRIPT} stop
-                                  Restart=always
-                                  RestartSec=5
-        [Install]
-          WantedBy=multi-user.target
-        #dummy padding
-        
-EOT
-        
-        systemctl daemon-reload && systemctl enable crushftp.service && systemctl start crushftp.service
-        get_pid         
-        echo "Service succesfully installed and running ... PID:$CRUSH_PID"   
-    #CentOS 6.6 and below         
-    elif [ "$INSTSCRIPT" = "2" ]; 
-      then
-        ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp 
-        chkconfig --add crushftp
-        chkconfig crushftp on
-        service crushftp start 
-        get_pid         
-        echo "Service succesfully installed and running ... PID:$CRUSH_PID"                       
-    #Debian and Ubuntu Old, some obsolete CentOS
-    elif [ "$INSTSCRIPT" = "3" ]; 
-      then
-        sudo ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp
-        sudo chkconfig --add crushftp
-        sudo chkconfig crushftp on
-        sudo service crushftp start 
-        sudo get_pid          
-        echo "Service succesfully installed and running ... PID:$CRUSH_PID"
-    #Ubuntu 12,14,15 except 13
-    elif [ "$INSTSCRIPT" = "4" ]; 
-      then
-        ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp
-        update-rc.d crushftp defaults
-        service crushftp start
-        get_pid         
-        echo "Service succesfully installed and running ... PID:$CRUSH_PID"
-                  
-    else
-      echo "Exiting..."
-      
-    fi
-    
+		fi
+		
+		#CentOS 7 , Ubuntu 16
+		if [ "$INSTSCRIPT" = "1" ]; 
+			then
+				touch /etc/systemd/system/crushftp.service
+				cat <<-EOT >/etc/systemd/system/crushftp.service
+				[Unit]
+					Description=CrushFTP 9 Server
+					Documentation=http://www.crushftp.com/
+					After=network.target auditd.service named.service
+				[Service]
+					Type=forking
+					ExecStart=${CRUSH_INIT_SCRIPT} start
+					ExecStop=${CRUSH_INIT_SCRIPT} stop
+                                	Restart=always
+                                	RestartSec=5
+				[Install]
+					WantedBy=multi-user.target
+				#dummy padding
+				EOT
+				
+				systemctl daemon-reload && systemctl enable crushftp.service && systemctl start crushftp.service
+				get_pid					
+				echo "Service succesfully installed and running ... PID:$CRUSH_PID" 	
+		#CentOS 6.6 and below					
+		elif [ "$INSTSCRIPT" = "2" ]; 
+			then
+				ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp 
+				chkconfig --add crushftp
+				chkconfig crushftp on
+				service crushftp start 
+				get_pid					
+				echo "Service succesfully installed and running ... PID:$CRUSH_PID" 											
+		#Debian and Ubuntu Old, some obsolete CentOS
+		elif [ "$INSTSCRIPT" = "3" ]; 
+			then
+				ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp
+				/etc/init.d/crushftp start
+				get_pid					
+				echo "Service succesfully installed and running ... PID:$CRUSH_PID"
+		#Ubuntu 12,14,15 except 13
+		elif [ "$INSTSCRIPT" = "4" ]; 
+			then
+				ln -f -s "$CRUSH_DIR"crushftp_init.sh /etc/init.d/crushftp
+				update-rc.d crushftp defaults
+				service crushftp start
+				get_pid					
+				echo "Service succesfully installed and running ... PID:$CRUSH_PID"
+									
+		else
+			echo "Exiting..."
+			
+		fi
+		
 
-  ;;
+	;;
         uninstall)
-    chk_user
-    get_pid
-    GetOsVer
-    if [ "$INSTSCRIPT" = "0" ];then
+		chk_user
+		get_pid
+        GetOsVer
+		if [ "$INSTSCRIPT" = "0" ];then
                         echo ""
                         echo "Automatic OS version detection failed. Please try to uninstall service manually"
                         echo ""
                         echo "Select your OS family:"
                         echo "1 - RHEL/CentOS 7 or Ubuntu 16  based (systemD method)"
                         echo "2 - RHEL/CentOS 6 and prior  based (system V method)"
-                        echo "3 - All Debian / All Ubuntu except 16 and 13 "
+                        echo "3 - Legacy"
                         echo "0 - Not sure - EXIT -"
                         echo ""
                         read -p '>>> ' INSTSCRIPT
 
                 fi
-    if [ "$INSTSCRIPT" = "0" ];then
-      echo "Exiting..."
-      exit 1
-     fi
+		if [ "$INSTSCRIPT" = "0" ];then
+			echo "Exiting..."
+			exit 1
+		 fi
                 
                #CentOS 7 , Ubuntu 16, RHEL 7 family
                 if [ "$INSTSCRIPT" = "1" ];then
@@ -412,6 +385,14 @@ EOT
                                 chkconfig --del crushftp
                                 rm -f /etc/init.d/crushftp
                                 echo "Service succesfully uninstalled"
+                elif [ "$INSTSCRIPT" = "3" ];then
+                  if [ "$CRUSH_PID" ];then
+                       echo "already running ( pid no.: $CRUSH_PID). stopping service"
+                       /etc/init.d/crushftp stop                       
+
+                   fi
+                                rm -f /etc/init.d/crushftp
+                                echo "Service succesfully uninstalled"
                 #Ubuntu 12,14,15 except 13
                 elif [ "$INSTSCRIPT" = "4" ];then
                    if [ "$CRUSH_PID" ];then
@@ -430,10 +411,10 @@ EOT
 
 
         ;;
-  info)
-    GetOsVer
-    echo $OSVER 
-  ;;    
+	info)
+		GetOsVer
+		echo $OSVER	
+	;;		
 
         *)
              echo "Usage: $0 [start|stop|restart|status|install|uninstall|info] Note: you must be logged in as $USER to run this script"
@@ -441,3 +422,4 @@ EOT
 esac
 
 exit 0
+
