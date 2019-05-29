@@ -1,11 +1,24 @@
 # CrushFTP for Docker
+
+[![Docker Automated build](https://img.shields.io/docker/automated/dalstroem/crushftp.svg)](https://hub.docker.com/r/dalstroem/crushftp/)
+[![Docker Build Status](https://img.shields.io/docker/build/dalstroem/crushftp.svg)](https://hub.docker.com/r/dalstroem/crushftp/)
+[![Docker image version](https://images.microbadger.com/badges/version/dalstroem/crushftp.svg)](https://microbadger.com/images/dalstroem/crushftp)
+[![Docker image size](https://images.microbadger.com/badges/image/dalstroem/crushftp.svg)](https://microbadger.com/images/dalstroem/crushftp)
+
 Docker image for CrushFTP server. Installs dependencies, including Java with unlimited JCE.
 
 **Note:** This repository does not directly include any of the aforementioned copyrighted products, rather, it downloads them from the servers of their respective developers at buildtime. By using this container, you agree to any licence terms they may have.
 
 This container, itself, is distributed under the [MIT Licence](https://github.com/Dalstroem/Docker-CrushFTP/blob/master/LICENSE).
 
-# Installation
+## Environment variables
+
+| Variable               | Description             | Default      |
+|:-----------------------|:------------------------|:-------------|
+| `CRUSH_ADMIN_USER`     | Admin user of CrushFTP  | `crushadmin` |
+| `CRUSH_ADMIN_PASSWORD` | Password for admin user | `crushadmin` |
+
+## Installation
 Run this container and share the containers `/var/opt/CrushFTP9_PC` directory, which persists CrushFTP's configuration, to an appropriate location on the host. Open a browser and go to http://localhost:8080. Note that the default username and password are both `crushadmin`.
 
 This command will create a new container and expose all ports. Remember to change the `<volume>` to a location on your host machine.
