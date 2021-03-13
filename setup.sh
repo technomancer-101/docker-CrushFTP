@@ -10,6 +10,7 @@ fi
 
 if [ -z ${CRUSH_ADMIN_USER} ]; then
     CRUSH_ADMIN_USER=crushadmin
+fi
 if [ -z ${CRUSH_ADMIN_PASSWORD} ] && [ -f ${CRUSH_FTP_BASE_DIR}/admin_user_set ]; then
     CRUSH_ADMIN_PASSWORD="NOT DISPLAYED!"
 elif [ -z ${CRUSH_ADMIN_PASSWORD} ] && [ ! -f ${CRUSH_FTP_BASE_DIR}/admin_user_set ]; then
@@ -17,9 +18,10 @@ elif [ -z ${CRUSH_ADMIN_PASSWORD} ] && [ ! -f ${CRUSH_FTP_BASE_DIR}/admin_user_s
 fi
 if [ -z ${CRUSH_ADMIN_PROTOCOL} ]; then
     CRUSH_ADMIN_PROTOCOL=http
+fi
 if [ -z ${CRUSH_ADMIN_PORT} ]; then
     CRUSH_ADMIN_PORT=8080
-
+fi
 if [[ ! -d ${CRUSH_FTP_BASE_DIR}/users/MainUsers/${CRUSH_ADMIN_USER} ]] || [[ -f ${CRUSH_FTP_BASE_DIR}/admin_user_set ]] ; then
     echo "Creating default admin..."
     cd ${CRUSH_FTP_BASE_DIR} && java -jar ${CRUSH_FTP_BASE_DIR}/CrushFTP.jar -a "${CRUSH_ADMIN_USER}" "${CRUSH_ADMIN_PASSWORD}"
@@ -34,5 +36,4 @@ echo "########################################"
 
 chmod +x crushftp_init.sh
 ${CRUSH_FTP_BASE_DIR}/crushftp_init.sh start
-
 while true; do sleep 86400; done
