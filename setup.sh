@@ -26,16 +26,13 @@ if [[ ! -d ${CRUSH_FTP_BASE_DIR}/users/MainUsers/${CRUSH_ADMIN_USER} ]] || [[ -f
     touch ${CRUSH_FTP_BASE_DIR}/admin_user_set
 fi
 
-chmod +x crushftp_init.sh
-${CRUSH_FTP_BASE_DIR}/crushftp_init.sh start
-until [ -f prefs.XML ]
-do
-     sleep 1
-done
-
 sleep 1
 echo "########################################"
 echo "# User:		${CRUSH_ADMIN_USER}"
 echo "# Password:	${CRUSH_ADMIN_PASSWORD}"
 echo "########################################"
+
+chmod +x crushftp_init.sh
+${CRUSH_FTP_BASE_DIR}/crushftp_init.sh start
+
 while true; do sleep 86400; done
