@@ -3,7 +3,7 @@ MAINTAINER MarkusMcNugen
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y default-jre
+    && apt-get install -y default-jre wget curl
 
 RUN wget -O /tmp/CrushFTP10.zip https://www.crushftp.com/early10/CrushFTP10.zip
 ADD ./setup.sh /var/opt/setup.sh
