@@ -1,17 +1,9 @@
-#FROM anapsix/alpine-java:8_jdk_unlimited
-FROM openjdk:15-alpine
+FROM ubuntu:20.04
+MAINTAINER MarkusMcNugen
 
-RUN \
-	apk upgrade --no-cache \
-	&& apk --no-cache add \
-		bash \
-		bash-completion \
-		bash-doc \
-		ca-certificates \
-		curl \
-		wget \
-		openrc \
-	&& update-ca-certificates
+RUN apt update \
+    && apt upgrade \
+    && apt install default-jre
 
 RUN wget -O /tmp/CrushFTP10.zip https://www.crushftp.com/early10/CrushFTP10.zip
 ADD ./setup.sh /var/opt/setup.sh
