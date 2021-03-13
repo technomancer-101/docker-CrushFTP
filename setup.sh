@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-CRUSH_FTP_BASE_DIR="/config/CrushFTP10"
+CRUSH_FTP_BASE_DIR="/var/opt/CrushFTP10"
 
 if [[ -f /tmp/CrushFTP10.zip ]] ; then
     echo "Unzipping CrushFTP..."
-    unzip -o -q /tmp/CrushFTP10.zip -d /config/
+    unzip -o -q /tmp/CrushFTP10.zip -d /var/opt/
     rm -f /tmp/CrushFTP10.zip
 fi
 
