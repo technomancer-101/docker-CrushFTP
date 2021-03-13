@@ -10,6 +10,7 @@ RUN \
 		ca-certificates \
 		curl \
 		wget \
+		openrc \
 	&& update-ca-certificates
 
 RUN wget -O /tmp/CrushFTP10.zip https://www.crushftp.com/early10/CrushFTP10.zip
