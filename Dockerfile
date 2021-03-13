@@ -17,7 +17,7 @@ ADD ./setup.sh /var/opt/setup.sh
 
 RUN chmod +x /var/opt/setup.sh
 
-VOLUME [ "/config" ]
+VOLUME [ "/var/opt/CrushFTP10" ]
 
 #ENTRYPOINT /var/opt/setup.sh
 ENTRYPOINT [ "/bin/bash", "/var/opt/setup.sh" ]
