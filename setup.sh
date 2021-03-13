@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-CRUSH_FTP_BASE_DIR="/var/opt/CrushFTP9"
+CRUSH_FTP_BASE_DIR="/config/CrushFTP10"
 
-if [[ -f /tmp/CrushFTP9.zip ]] ; then
+if [[ -f /tmp/CrushFTP10.zip ]] ; then
     echo "Unzipping CrushFTP..."
-    unzip -o -q /tmp/CrushFTP9.zip -d /var/opt/
-    rm -f /tmp/CrushFTP9.zip
+    unzip -o -q /tmp/CrushFTP10.zip -d /config/
+    rm -f /tmp/CrushFTP10.zip
 fi
 
 [ -z ${CRUSH_ADMIN_USER} ] && CRUSH_ADMIN_USER=crushadmin
