@@ -14,12 +14,12 @@ This container is distributed under the [MIT Licence](LICENSE).
 ## Volumes
 | Volume | Required | Function | Example |
 |----------|----------|----------|----------|
-| `config` | Yes | Persistent storage for CrushFTP config | `/your/config/path/:/config`|
+| `/var/opt/CrushFTP10` | Yes | Persistent storage for CrushFTP config | `/your/config/path/:/var/opt/CrushFTP10`|
 
 ## Paths
 | Path | Required | Function |
 |----------|----------|----------|
-| `/config/fCrushFTP10` | Yes | CrushFTP 10 configuration files |
+| `/var/opt/CrushFTP10` | Yes | CrushFTP 10 configuration files |
 
 ## Ports
 The OpenSSH server runs by default on port 22. You can forward the container's port 22 to the any host port.
@@ -47,5 +47,5 @@ Run this container and share the containers `/config` directory, which persists 
 This command will create a new container and expose all ports. Remember to change the `<volume>` to a location on your host machine.
 
 ```
-docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/config markusmcnugen/crushftp:latest
+docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
 ```
