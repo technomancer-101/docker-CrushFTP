@@ -1,9 +1,9 @@
 FROM ubuntu:20.04
 MAINTAINER MarkusMcNugen
 
-RUN apt update \
-    && apt upgrade \
-    && apt install default-jre
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y default-jre
 
 RUN wget -O /tmp/CrushFTP10.zip https://www.crushftp.com/early10/CrushFTP10.zip
 ADD ./setup.sh /var/opt/setup.sh
