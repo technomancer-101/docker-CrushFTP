@@ -30,7 +30,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `CRUSH_ADMIN_PORT`     | Port for health cecks     | `8080`       |
 
 # Installation
-Run this container and mount the containers `/var/opt/CrushFTP10` volume to the host to keep CrushFTP's configuration persistent. Open a browser and go to http://`<IP>`:8080. Note that the default username and password are both `crushadmin` unless the default environment variables are changed.
+Run this container and mount the containers `/var/opt/CrushFTP10` volume to the host to keep CrushFTP's configuration persistent. Open a browser and go to `http://<IP>:8080`. Note that the default username and password are both `crushadmin` unless the default environment variables are changed.
 
 This command will create a new container and expose all ports. Remember to change the `<volume>` to a location on your host machine.
 
