@@ -10,7 +10,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `/var/opt/CrushFTP10` | Yes | Persistent storage for CrushFTP config | `/your/config/path/:/var/opt/CrushFTP10`|
 | `/mnt/FTP/Shared` | No | Shared host folder for file sharing with users | `/your/host/path/:/mnt/FTP/Shared`|
 
-### You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTPs User Manager. The "/mnt/FTP/Shared" in the table above is just one such example.
+* You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTPs User Manager. The "/mnt/FTP/Shared" in the table above is just one such example.
 
 ## Ports
 | Port | Proto | Required | Function | Example |
@@ -21,7 +21,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `8080` | TCP | Yes | HTTP Port | `8080:8080`|
 | `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
 
-### If you wish to run certain protocols on different ports you will need to change these to match the CrushFTP config
+* If you wish to run certain protocols on different ports you will need to change these to match the CrushFTP config
 
 ## Environment Variables
 | Variable               | Description               | Default      |
