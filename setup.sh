@@ -40,7 +40,6 @@ do
      sleep 1
 done
 
-sleep 1
 echo "########################################"
 echo "# User:		${CRUSH_ADMIN_USER}"
 echo "# Password:	${CRUSH_ADMIN_PASSWORD}"
