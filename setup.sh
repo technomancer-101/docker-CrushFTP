@@ -18,13 +18,13 @@ elif [ -z ${CRUSH_ADMIN_PASSWORD} ] && [ ! -f ${CRUSH_FTP_BASE_DIR}/admin_user_s
     CRUSH_ADMIN_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 fi
 
-if [ -z ${CRUSH_ADMIN_PROTOCOL} ]; then
-    CRUSH_ADMIN_PROTOCOL=http
-fi
+#if [ -z ${CRUSH_ADMIN_PROTOCOL} ]; then
+#    CRUSH_ADMIN_PROTOCOL=http
+#fi
 
-if [ -z ${CRUSH_ADMIN_PORT} ]; then
-    CRUSH_ADMIN_PORT=8080
-fi
+#if [ -z ${CRUSH_ADMIN_PORT} ]; then
+#    CRUSH_ADMIN_PORT=8080
+#fi
 
 if [[ ! -d ${CRUSH_FTP_BASE_DIR}/users/MainUsers/${CRUSH_ADMIN_USER} ]] || [[ -f ${CRUSH_FTP_BASE_DIR}/admin_user_set ]] ; then
     echo "Creating default admin..."
