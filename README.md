@@ -21,6 +21,8 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `8080` | TCP | Yes | HTTP Port | `8080:8080`|
 | `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
 
+### If you wish to run certain protocols on different ports you will need to change these to match the CrushFTP config
+
 ## Environment Variables
 | Variable               | Description               | Default      |
 |:-----------------------|:--------------------------|:-------------|
@@ -38,5 +40,5 @@ This command will create a new container and expose all ports. Remember to chang
 docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
 ```
 
-# CrushFTP Help
+# CrushFTP Configuration
 Visit the [CrushFTP 10 Wiki](https://www.crushftp.com/crush10wiki/)
