@@ -18,7 +18,7 @@ The OpenSSH server runs by default on port 22. You can forward the container's p
 | `443` | TCP | Yes | HTTPS Port | `443:443`|
 | `2222` | TCP | Yes | SFTP Port | `2222:2222`|
 | `8080` | TCP | Yes | HTTP Port | `8080:8080`|
-| `9090` | TCP | Yes | HTTP Port 2 | `9090:9090`|
+| `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
 
 ## Environment Variables
 
