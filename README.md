@@ -8,6 +8,9 @@ This container is distributed under the [MIT Licence](LICENSE).
 | Volume | Required | Function | Example |
 |----------|----------|----------|----------|
 | `/var/opt/CrushFTP10` | Yes | Persistent storage for CrushFTP config | `/your/config/path/:/var/opt/CrushFTP10`|
+| `/mnt/FTP/Shared` | No | Shared host folder for file sharing with users | `/your/host/path/:/mnt/FTP/Shared`|
+
+### You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTP. The "/mnt/FTP/Shared" in the table above is just one such example.
 
 ## Ports
 The OpenSSH server runs by default on port 22. You can forward the container's port 22 to the any host port.
@@ -35,3 +38,6 @@ This command will create a new container and expose all ports. Remember to chang
 ```
 docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
 ```
+
+## CrushFTP Help
+Visit the [CrushFTP 10 Wiki](https://www.crushftp.com/crush10wiki/)
