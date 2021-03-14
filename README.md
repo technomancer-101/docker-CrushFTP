@@ -10,7 +10,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `/var/opt/CrushFTP10` | Yes | Persistent storage for CrushFTP config | `/your/config/path/:/var/opt/CrushFTP10`|
 | `/mnt/FTP/Shared` | No | Shared host folder for file sharing with users | `/your/host/path/:/mnt/FTP/Shared`|
 
-### You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTP. The "/mnt/FTP/Shared" in the table above is just one such example.
+### You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTPs User Manager. The "/mnt/FTP/Shared" in the table above is just one such example.
 
 ## Ports
 | Port | Proto | Required | Function | Example |
@@ -29,7 +29,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `CRUSH_ADMIN_PROTOCOL` | Protocol for health cecks | `http`       |
 | `CRUSH_ADMIN_PORT`     | Port for health cecks     | `8080`       |
 
-## Installation
+# Installation
 Run this container and mount the containers `/var/opt/CrushFTP10` volume to the host to keep CrushFTP's configuration persistent. Open a browser and go to http://[IP]:8080. Note that the default username and password are both `crushadmin` unless the default environment variables are changed.
 
 This command will create a new container and expose all ports. Remember to change the `<volume>` to a location on your host machine.
@@ -38,5 +38,5 @@ This command will create a new container and expose all ports. Remember to chang
 docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
 ```
 
-## CrushFTP Help
+# CrushFTP Help
 Visit the [CrushFTP 10 Wiki](https://www.crushftp.com/crush10wiki/)
