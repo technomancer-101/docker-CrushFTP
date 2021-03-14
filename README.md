@@ -13,8 +13,6 @@ This container is distributed under the [MIT Licence](LICENSE).
 ### You can add as many volumes as you want between host and the container and change their mount location within the container. You will configure individual folder access and permissions for each user in CrushFTP. The "/mnt/FTP/Shared" in the table above is just one such example.
 
 ## Ports
-The OpenSSH server runs by default on port 22. You can forward the container's port 22 to the any host port.
-
 | Port | Proto | Required | Function | Example |
 |----------|----------|----------|----------|----------|
 | `21` | TCP | Yes | FTP Port | `21:21`|
@@ -24,11 +22,12 @@ The OpenSSH server runs by default on port 22. You can forward the container's p
 | `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
 
 ## Environment Variables
-
 | Variable               | Description               | Default      |
 |:-----------------------|:--------------------------|:-------------|
 | `CRUSH_ADMIN_USER`     | Admin user of CrushFTP    | `crushadmin` |
 | `CRUSH_ADMIN_PASSWORD` | Password for admin user   | `crushadmin` |
+| `CRUSH_ADMIN_PROTOCOL` | Protocol for health cecks | `http`       |
+| `CRUSH_ADMIN_PORT`     | Port for health cecks     | `8080`       |
 
 ## Installation
 Run this container and mount the containers `/var/opt/CrushFTP10` volume to the host to keep CrushFTP's configuration persistent. Open a browser and go to http://[IP]:8080. Note that the default username and password are both `crushadmin` unless the default environment variables are changed.
