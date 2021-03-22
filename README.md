@@ -5,7 +5,10 @@
 
 Ubuntu 20.04 based docker container which runs CrushFTP 10.
 
-Size 641.1MB
+## Docker Features
+* Base: Alpine 3.12 Linux (microblink/java)
+* CrushFTP 10
+* Size: 234.8MB
 
 This container is distributed under the [MIT Licence](LICENSE).
 
