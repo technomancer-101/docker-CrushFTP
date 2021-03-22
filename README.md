@@ -3,6 +3,8 @@
 
 ![alt text][preview]
 
+Share your files securely with FTP, Implicit FTPS, SFTP, HTTP, or HTTPS using CrushFTP
+
 ## Docker Features
 * Base: Ubuntu 20.04
 * CrushFTP 10
