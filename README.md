@@ -1,5 +1,11 @@
+[preview]: https://raw.githubusercontent.com/MarkusMcNugen/docker-templates/master/crushftp10/crushftp.png "CrushFTP Logo"
 # CrushFTP 10
+
+![alt text][preview]
+
 Ubuntu 20.04 based docker container which runs CrushFTP 10.
+
+Size 641.1MB
 
 This container is distributed under the [MIT Licence](LICENSE).
 
