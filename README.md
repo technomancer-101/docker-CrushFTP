@@ -3,7 +3,7 @@
 
 ![alt text][preview]
 
-Ubuntu 20.04 based docker container which runs CrushFTP 10.
+Share your files securely with FTP, SFTP, HTTP, or HTTPS using CrushFTP
 
 ## Docker Features
 * Base: Alpine 3.12 Linux (microblink/java)
