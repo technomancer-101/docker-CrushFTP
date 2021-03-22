@@ -17,6 +17,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 |----------|----------|----------|----------|----------|
 | `21` | TCP | Yes | FTP Port | `21:21`|
 | `443` | TCP | Yes | HTTPS Port | `443:443`|
+| `2000-2100` | TCP | Yes | Passive FTP Ports | `2000-2100:2000-2100`|
 | `2222` | TCP | Yes | SFTP Port | `2222:2222`|
 | `8080` | TCP | Yes | HTTP Port | `8080:8080`|
 | `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
@@ -37,7 +38,7 @@ Run this container and mount the containers `/var/opt/CrushFTP10` volume to the 
 This command will create a new container and expose all ports. Remember to change the `<volume>` to a location on your host machine.
 
 ```
-docker run -p 21:21 -p 443:443 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
+docker run -p 21:21 -p 443:443 -p 2000-2100:2000-2100 -p 2222:2222 -p 8080:8080 -p 9090:9090 -v <volume>:/var/opt/CrushFTP10 markusmcnugen/crushftp:latest
 ```
 
 # CrushFTP Configuration
