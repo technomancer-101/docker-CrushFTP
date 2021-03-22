@@ -1,7 +1,7 @@
 [preview]: https://raw.githubusercontent.com/MarkusMcNugen/docker-templates/master/crushftp10/crushftp.png "CrushFTP Logo"
-# CrushFTP 10
 
 ![alt text][preview]
+# CrushFTP 10
 
 Share your files securely with FTP, Implicit FTPS, SFTP, HTTP, or HTTPS using CrushFTP
 
