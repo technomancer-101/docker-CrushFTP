@@ -21,7 +21,7 @@ This container is distributed under the [MIT Licence](LICENSE).
 | `8080` | TCP | Yes | HTTP Port | `8080:8080`|
 | `9090` | TCP | Yes | HTTP Alt Port | `9090:9090`|
 
-* If you wish to run certain protocols on different ports you will need to change these to match the CrushFTP config
+* If you wish to run certain protocols on different ports you will need to change these to match the CrushFTP config. If you enable implicit or explicit FTPS those ports will also need to be opened.
 
 ## Environment Variables
 | Variable               | Description               | Default      |
