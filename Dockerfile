@@ -1,10 +1,10 @@
-FROM ubuntu:20.04
+FROM microblink/java:latest
 MAINTAINER MarkusMcNugen
 # Forked from shokinn
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y openjdk-14-jre wget curl unzip
+RUN apk upgrade --no-cache \
+    && apk --no-cache add bash bash-completion bash-doc ca-certificates curl wget \
+	&& update-ca-certificates
 
 RUN wget -O /tmp/CrushFTP10.zip https://www.crushftp.com/early10/CrushFTP10.zip
 ADD ./setup.sh /var/opt/setup.sh
