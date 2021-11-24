@@ -1,7 +1,7 @@
 version: '3.3'
 services:
     crushftp:
-      image: 'technomancer101/crushftp:latest'
+        image: 'technomancer101/crushftp:latest'
         ports:
             - '21:21'
             - '443:443'
