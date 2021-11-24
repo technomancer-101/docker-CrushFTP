@@ -1,6 +1,6 @@
 FROM microblink/java:latest
-MAINTAINER MarkusMcNugen
-# Forked from shokinn
+MAINTAINER MatthewFey
+# Forked from markusmcnugen
 
 RUN apk upgrade --no-cache \
     && apk --no-cache add bash bash-completion bash-doc ca-certificates curl wget \
