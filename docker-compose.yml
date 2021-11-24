@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    crushftp:
+      image: 'technomancer101/crushftp:latest'
+        ports:
+            - '21:21'
+            - '443:443'
+            - '4832-4850:4832-4850'
+            - '2222:2222'
+            - '8080:8080'
+            - '9090:9090'
+        volumes:
+            - '/opt/CrushFTP10/data:/var/opt/CrushFTP10'
+      
