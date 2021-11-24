@@ -11,4 +11,5 @@ services:
             - '9090:9090'
         volumes:
             - '/opt/CrushFTP10/data:/var/opt/CrushFTP10'
+            - '/opt/CrushFTP10/FTP:/mnt/FTP/'
       
